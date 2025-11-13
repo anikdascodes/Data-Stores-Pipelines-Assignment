@@ -1,0 +1,46 @@
+seller_id,item_id,item_name,category,marketplace_price,stock_qty
+S001,I001,  Wireless Mouse  ,Electronics,25.99,100
+S001,I002,USB-C Cable,Electronics,12.50,200
+S001,I003,Laptop Stand,Electronics,45.00,50
+S002,I001,Wireless Mouse,ELECTRONICS,24.99,150
+S002,I004,Mechanical Keyboard,Electronics,89.99,75
+S002,I005,Notebook Set,  Stationery  ,15.99,300
+S003,I006,Running Shoes,Sports,79.99,60
+S003,I007,Yoga Mat,sports,29.99,120
+S003,I008,Water Bottle,Sports,19.99,200
+,I009,Protein Powder,Health,49.99,80
+S004,I010,Coffee Maker,Kitchen,125.00,40
+S004,,Blender,Kitchen,75.50,55
+S004,I012,Cookware Set,kitchen,199.99,25
+S005,I001,Wireless Mouse,Electronics,26.50,90
+S005,I013,HDMI Cable,Electronics,-5.99,100
+S005,I014,Phone Case,Electronics,14.99,500
+S006,I015,Office Chair,,180.00,30
+S006,I016,Desk Lamp,Furniture,45.00,70
+S006,I017,Standing Desk,Furniture,350.00,-10
+S007,I018,Backpack,Fashion,65.00,85
+S007,I019,Sunglasses,fashion,120.00,110
+S007,I020,Watch,Fashion,250.00,45
+S008,I021,Shampoo,Beauty,12.99,400
+S008,I022,,Beauty,18.50,300
+S008,I023,Face Cream,Beauty,35.00,150
+S009,I024,Dog Food,Pets,45.00,200
+S009,I025,Cat Toy,pets,8.99,350
+S009,I026,Pet Bed,Pets,55.00,90
+S010,I027,Garden Tools,Garden,89.99,60
+S010,I028,Plant Pots,Garden,25.00,180
+S001,I029,Monitor,Electronics,299.99,35
+S002,I030,External SSD,Electronics,149.99,100
+S003,I031,Dumbbells,Sports,120.00,40
+S004,I032,Toaster,Kitchen,45.00,70
+S005,I033,Webcam,Electronics,79.99,65
+S006,I034,Bookshelf,Furniture,135.00,25
+S007,I035,Belt,Fashion,35.00,140
+S008,I036,Lipstick,Beauty,22.00,250
+S009,I037,Fish Tank,Pets,180.00,15
+S010,I038,Lawn Mower,Garden,320.00,12
+S001,I004,Mechanical Keyboard,Electronics,85.99,80
+S003,I002,USB-C Cable,Electronics,11.99,220
+S005,I006,Running Shoes,Sports,75.00,55
+S007,I010,Coffee Maker,Kitchen,119.99,38
+S009,I015,Office Chair,Furniture,175.00,32
