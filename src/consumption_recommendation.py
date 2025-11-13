@@ -170,7 +170,7 @@ def get_top_selling_competitor_items(competitor_sales_df, top_n: int = 10):
     return top_competitor_items
 
 
-def generate_recommendations(seller_catalog_df, top_company_items, top_competitor_items):
+def generate_recommendations(seller_catalog_df, top_company_items, top_competitor_items, competitor_sales_df):
     """
     Generate recommendations for each seller based on missing items.
 
@@ -178,6 +178,7 @@ def generate_recommendations(seller_catalog_df, top_company_items, top_competito
         seller_catalog_df: Seller catalog Hudi DataFrame
         top_company_items: Top selling items from company
         top_competitor_items: Top selling competitor items
+        competitor_sales_df: Competitor sales Hudi DataFrame (for seller count calculation)
 
     Returns:
         DataFrame with recommendations
@@ -377,7 +378,8 @@ def main():
         recommendations = generate_recommendations(
             seller_catalog_df,
             top_company_items,
-            top_competitor_items
+            top_competitor_items,
+            competitor_sales_df
         )
 
         # Write recommendations

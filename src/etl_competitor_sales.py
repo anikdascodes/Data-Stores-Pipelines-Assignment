@@ -236,10 +236,10 @@ def write_to_hudi(df, hudi_path: str, table_name: str):
     # Add timestamp for precombine
     df_hudi = df.withColumn("ts", F.lit(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
-    # Hudi configuration with composite key
+    # Hudi configuration with composite key (includes sale_date to preserve historical records)
     hudi_options = {
         'hoodie.table.name': table_name,
-        'hoodie.datasource.write.recordkey.field': 'seller_id,item_id',
+        'hoodie.datasource.write.recordkey.field': 'seller_id,item_id,sale_date',
         'hoodie.datasource.write.precombine.field': 'ts',
         'hoodie.datasource.write.table.type': 'COPY_ON_WRITE',
         'hoodie.datasource.write.operation': 'upsert',
