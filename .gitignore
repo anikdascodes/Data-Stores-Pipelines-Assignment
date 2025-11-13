@@ -1,0 +1,63 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Data directories (exclude processed data from git)
+data/processed/
+data/quarantine/
+data/output/
+*.log
+
+# Hudi tables
+*_hudi/
+*.parquet
+*.crc
+.hoodie/
+
+# Spark
+spark-warehouse/
+derby.log
+metastore_db/
+
+# Environment
+.env
+.env.local
+
+# OS
+Thumbs.db

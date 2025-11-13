@@ -1,0 +1,12 @@
+# PySpark and Hadoop dependencies
+pyspark==3.5.0
+
+# YAML configuration
+PyYAML==6.0.1
+
+# Data processing
+pandas==2.1.4
+numpy==1.26.2
+
+# Logging and utilities
+python-dateutil==2.8.2

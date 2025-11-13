@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  pyspark-ecommerce:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ecommerce-recommendation-system
+    image: pyspark-hudi-ecommerce:latest
+    volumes:
+      # Mount source code for development
+      - ./src:/app/src
+      - ./configs:/app/configs
+      - ./scripts:/app/scripts
+      # Mount data directories to persist outputs
+      - ./data/raw:/app/data/raw
+      - ./data/processed:/app/data/processed
+      - ./data/quarantine:/app/data/quarantine
+      - ./data/output:/app/data/output
+    environment:
+      - SPARK_MASTER=local[*]
+      - SPARK_DRIVER_MEMORY=4g
+      - SPARK_EXECUTOR_MEMORY=4g
+    working_dir: /app
+    stdin_open: true
+    tty: true
+    command: /bin/bash -c "echo 'PySpark E-commerce Recommendation System Ready!' &&
+                           echo '=============================================' &&
+                           echo 'To run ETL pipelines:' &&
+                           echo '  ./scripts/etl_seller_catalog_spark_submit.sh' &&
+                           echo '  ./scripts/etl_company_sales_spark_submit.sh' &&
+                           echo '  ./scripts/etl_competitor_sales_spark_submit.sh' &&
+                           echo '  ./scripts/consumption_recommendation_spark_submit.sh' &&
+                           echo '' &&
+                           echo 'Or run the complete pipeline:' &&
+                           echo '  ./scripts/run_full_pipeline.sh' &&
+                           echo '=============================================' &&
+                           /bin/bash"
+
+# Optional: Service to run the full pipeline automatically
+  run-pipeline:
+    extends: pyspark-ecommerce
+    container_name: ecommerce-auto-run
+    command: /bin/bash -c "./scripts/run_full_pipeline.sh"
+    profiles:
+      - auto-run
