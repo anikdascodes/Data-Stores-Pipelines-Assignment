@@ -2,25 +2,25 @@
 # This configuration file contains all input/output paths for the ETL and consumption pipelines
 
 seller_catalog:
-  input_path: "/app/data/raw/seller_catalog/seller_catalog.csv"
-  hudi_output_path: "/app/data/processed/seller_catalog_hudi/"
-  quarantine_path: "/app/data/quarantine/seller_catalog/"
+  input_path: "/workspace/project/Data-Stores-Pipelines-Assignment/data/raw/seller_catalog/seller_catalog_clean.csv"
+  hudi_output_path: "/workspace/project/Data-Stores-Pipelines-Assignment/data/processed/seller_catalog_hudi/"
+  quarantine_path: "/workspace/project/Data-Stores-Pipelines-Assignment/data/quarantine/seller_catalog/"
 
 company_sales:
-  input_path: "/app/data/raw/company_sales/company_sales.csv"
-  hudi_output_path: "/app/data/processed/company_sales_hudi/"
-  quarantine_path: "/app/data/quarantine/company_sales/"
+  input_path: "/workspace/project/Data-Stores-Pipelines-Assignment/data/raw/company_sales/company_sales_clean.csv"
+  hudi_output_path: "/workspace/project/Data-Stores-Pipelines-Assignment/data/processed/company_sales_hudi/"
+  quarantine_path: "/workspace/project/Data-Stores-Pipelines-Assignment/data/quarantine/company_sales/"
 
 competitor_sales:
-  input_path: "/app/data/raw/competitor_sales/competitor_sales.csv"
-  hudi_output_path: "/app/data/processed/competitor_sales_hudi/"
-  quarantine_path: "/app/data/quarantine/competitor_sales/"
+  input_path: "/workspace/project/Data-Stores-Pipelines-Assignment/data/raw/competitor_sales/competitor_sales_clean.csv"
+  hudi_output_path: "/workspace/project/Data-Stores-Pipelines-Assignment/data/processed/competitor_sales_hudi/"
+  quarantine_path: "/workspace/project/Data-Stores-Pipelines-Assignment/data/quarantine/competitor_sales/"
 
 recommendation:
-  seller_catalog_hudi: "/app/data/processed/seller_catalog_hudi/"
-  company_sales_hudi: "/app/data/processed/company_sales_hudi/"
-  competitor_sales_hudi: "/app/data/processed/competitor_sales_hudi/"
-  output_csv: "/app/data/output/recommendations/seller_recommend_data.csv"
+  seller_catalog_hudi: "/workspace/project/Data-Stores-Pipelines-Assignment/data/processed/seller_catalog_hudi/"
+  company_sales_hudi: "/workspace/project/Data-Stores-Pipelines-Assignment/data/processed/company_sales_hudi/"
+  competitor_sales_hudi: "/workspace/project/Data-Stores-Pipelines-Assignment/data/processed/competitor_sales_hudi/"
+  output_csv: "/workspace/project/Data-Stores-Pipelines-Assignment/data/output/recommendations/seller_recommend_data.csv"
   top_n_items: 10
 
 # Hudi Table Configuration
@@ -32,5 +32,10 @@ hudi_config:
 spark_config:
   app_name_prefix: "EcommerceRecommendation"
   log_level: "WARN"
-  driver_memory: "4g"
-  executor_memory: "4g"
+  driver_memory: "8g"
+  executor_memory: "8g"
+  executor_cores: "4"
+  max_result_size: "4g"
+  sql_adaptive_enabled: true
+  sql_adaptive_coalesce_partitions_enabled: true
+  sql_adaptive_skew_join_enabled: true

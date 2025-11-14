@@ -12,7 +12,7 @@ echo "Seller Catalog ETL - Spark Submit"
 echo "=========================================="
 
 # Configuration
-APP_DIR="/app"
+APP_DIR="/workspace/project/Data-Stores-Pipelines-Assignment"
 CONFIG_FILE="${APP_DIR}/configs/ecomm_prod.yml"
 PYTHON_SCRIPT="${APP_DIR}/src/etl_seller_catalog.py"
 

@@ -1,5 +1,5 @@
 # Dockerfile for PySpark 3.5 + Apache Hudi 0.15.0 E-commerce Recommendation System
-FROM openjdk:11-jdk-slim
+FROM eclipse-temurin:11-jdk-jammy
 
 # Set environment variables
 ENV SPARK_VERSION=3.5.0 \
@@ -10,17 +10,16 @@ ENV SPARK_VERSION=3.5.0 \
 
 # Install Python 3.10 and dependencies
 RUN apt-get update && apt-get install -y \
-    python3.10 \
+    python3 \
     python3-pip \
-    python3.10-dev \
+    python3-dev \
     wget \
     curl \
     procps \
     && rm -rf /var/lib/apt/lists/*
 
 # Create symbolic links for python
-RUN ln -sf /usr/bin/python3.10 /usr/bin/python && \
-    ln -sf /usr/bin/python3.10 /usr/bin/python3
+RUN ln -sf /usr/bin/python3 /usr/bin/python
 
 # Download and install Apache Spark
 RUN wget -q https://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz && \
