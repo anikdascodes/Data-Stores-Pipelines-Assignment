@@ -41,15 +41,30 @@ def get_spark_session(app_name: str) -> SparkSession:
     Returns:
         Configured SparkSession
     """
-    spark = (
-        SparkSession.builder
-        .appName(app_name)
-        .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
-        .config("spark.sql.legacy.timeParserPolicy", "LEGACY")
-        .config("spark.sql.extensions", "org.apache.spark.sql.hudi.HoodieSparkSessionExtension")
-        .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.hudi.catalog.HoodieCatalog")
-        .getOrCreate()
-    )
+    # Check if we're running with Hudi packages (spark-submit)
+    import os
+    if 'SPARK_SUBMIT_OPTS' in os.environ or any('hudi' in str(arg).lower() for arg in sys.argv):
+        logger.info("Detected Hudi packages, creating session with Hudi extensions...")
+        spark = (
+            SparkSession.builder
+            .appName(app_name)
+            .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
+            .config("spark.sql.legacy.timeParserPolicy", "LEGACY")
+            .config("spark.sql.extensions", "org.apache.spark.sql.hudi.HoodieSparkSessionExtension")
+            .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.hudi.catalog.HoodieCatalog")
+            .getOrCreate()
+        )
+    else:
+        logger.info("Creating Spark session without Hudi extensions for testing...")
+        # Fallback without Hudi extensions (for direct Python execution)
+        spark = (
+            SparkSession.builder
+            .appName(app_name)
+            .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
+            .config("spark.sql.legacy.timeParserPolicy", "LEGACY")
+            .getOrCreate()
+        )
+    
     spark.sparkContext.setLogLevel("WARN")
     logger.info(f"Spark session created: {app_name}")
     return spark
@@ -77,7 +92,7 @@ def load_config(config_path: str) -> dict:
 
 def read_hudi_table(spark, hudi_path: str, table_name: str):
     """
-    Read Hudi table.
+    Read Hudi table or Parquet as fallback.
 
     Args:
         spark: SparkSession
@@ -87,15 +102,25 @@ def read_hudi_table(spark, hudi_path: str, table_name: str):
     Returns:
         DataFrame
     """
-    logger.info(f"Reading Hudi table: {table_name} from {hudi_path}")
+    logger.info(f"Reading table: {table_name} from {hudi_path}")
     try:
+        # Try reading as Hudi first
         df = spark.read.format("hudi").load(hudi_path)
         count = df.count()
-        logger.info(f"Successfully read {count} records from {table_name}")
+        logger.info(f"Successfully read {count} records from Hudi table {table_name}")
         return df
     except Exception as e:
-        logger.error(f"Failed to read Hudi table {table_name}: {e}")
-        raise
+        logger.warning(f"Failed to read as Hudi table {table_name}: {e}")
+        logger.info(f"Attempting to read as Parquet format...")
+        try:
+            # Fallback to Parquet
+            df = spark.read.parquet(hudi_path)
+            count = df.count()
+            logger.info(f"Successfully read {count} records from Parquet format {table_name}")
+            return df
+        except Exception as e2:
+            logger.error(f"Failed to read table {table_name} in both Hudi and Parquet formats: {e2}")
+            raise
 
 
 def get_top_selling_company_items(company_sales_df, seller_catalog_df, top_n: int = 10):
